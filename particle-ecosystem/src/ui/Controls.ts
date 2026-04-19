@@ -39,12 +39,20 @@ export function mountGui(params: SimParams, hooks: {
   onTrailChange: (v: number) => void;
   onMaxCountChange: (species: Species, v: number) => void;
   onReset: () => void;
+  onRandomize: () => void;
 }): GUI {
   const gui = new GUI({ title: 'Particle Ecosystem', width: 300 });
 
+  // Top-level actions (always visible, above folders)
+  const actions = {
+    reset: () => hooks.onReset(),
+    randomize: () => hooks.onRandomize(),
+  };
+  gui.add(actions, 'reset').name('▶ Reset (re-seed)');
+  gui.add(actions, 'randomize').name('🎲 Randomize all');
+
   const sim = gui.addFolder('Simulation');
   sim.add(params, 'speedMultiplier', 0.1, 5.0, 0.1).name('Speed multiplier');
-  sim.add({ reset: () => hooks.onReset() }, 'reset').name('Reset');
 
   const pop = gui.addFolder('Population Limits');
   for (const s of SPECIES) {

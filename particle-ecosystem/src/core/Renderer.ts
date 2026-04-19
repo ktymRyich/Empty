@@ -24,7 +24,7 @@ export function createRenderer(
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000010, 1);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
+  renderer.toneMappingExposure = 0.9;
   container.appendChild(renderer.domElement);
 
   const size = new THREE.Vector2(container.clientWidth, container.clientHeight);
@@ -34,7 +34,7 @@ export function createRenderer(
   composer.setSize(size.x, size.y);
   composer.addPass(new RenderPass(scene, camera));
 
-  const bloomPass = new UnrealBloomPass(size, 1.2, 0.8, 0.18);
+  const bloomPass = new UnrealBloomPass(size, 0.55, 0.65, 0.85);
   composer.addPass(bloomPass);
 
   composer.addPass(new OutputPass());
