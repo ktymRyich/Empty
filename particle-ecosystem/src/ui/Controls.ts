@@ -25,7 +25,7 @@ export function createSimParams(): SimParams {
     flocking: { separation: 1.5, alignment: 1.0, cohesion: 0.9, perception: 55 },
     blackHoleGravity: 1.0,
     nebulaBoost: 2.5,
-    bloomIntensity: 1.2,
+    bloomIntensity: 0.95,
     particleSize: 1.0,
     trailLength: 6,
     maxCounts,

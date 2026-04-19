@@ -128,7 +128,7 @@ new Loop((dt, elapsed) => {
   controls.update();
   nebula.update(elapsed);
   blackHoles.gravity = params.blackHoleGravity;
-  blackHoles.update(dt);
+  blackHoles.update(dt, elapsed);
 
   // Rebuild neighbor grid
   system.rebuildGrid();
