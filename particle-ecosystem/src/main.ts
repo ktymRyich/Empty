@@ -45,7 +45,22 @@ const gui = mountGui(params, {
     SPECIES[sp].maxCount = Math.floor(v);
   },
   onReset: () => {
-    // Kill all particles and reseed
+    for (const p of system.particles) system.kill(p);
+    system.compactDead();
+    system.seed(worldBounds);
+  },
+  onRandomize: () => {
+    // Randomize simulation parameters + reseed population
+    params.speedMultiplier = 0.5 + Math.random() * 1.5;
+    params.mutationRate = Math.random() * 0.05;
+    params.flocking.separation = 0.5 + Math.random() * 2.0;
+    params.flocking.alignment = 0.3 + Math.random() * 1.7;
+    params.flocking.cohesion = 0.3 + Math.random() * 1.7;
+    params.flocking.perception = 30 + Math.random() * 120;
+    params.blackHoleGravity = Math.random() * 2.5;
+    params.nebulaBoost = 1 + Math.random() * 3;
+    (window as any).__mutationRate = params.mutationRate;
+    gui.controllersRecursive().forEach((c) => c.updateDisplay());
     for (const p of system.particles) system.kill(p);
     system.compactDead();
     system.seed(worldBounds);
@@ -203,17 +218,6 @@ new Loop((dt, elapsed) => {
 
   system.compactDead();
   system.writeBuffers();
-
-  // Trail: skip autoclear for fade
-  const trail = (renderer as any).__trail ?? params.trailLength;
-  if (trail > 0) {
-    renderer.autoClearColor = false;
-    // Draw fading quad via alpha clear workaround
-    renderer.setClearColor(0x000010, Math.max(0.12, 1 - trail / 30));
-  } else {
-    renderer.autoClearColor = true;
-    renderer.setClearColor(0x00000a, 1);
-  }
 
   composer.render();
 
