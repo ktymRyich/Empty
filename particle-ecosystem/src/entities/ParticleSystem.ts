@@ -21,12 +21,6 @@ export interface WorldParams {
   sizeScale: number;
 }
 
-export interface EnvironmentHook {
-  nebulaBoostAt(x: number, y: number, z: number): number;
-  applyBlackHoles(p: Particle, dt: number): boolean; // return false if consumed
-  applyAsteroids(p: Particle, dt: number): void;
-}
-
 export class ParticleSystem {
   particles: Particle[] = [];
   private pool: ObjectPool<Particle>;
@@ -38,6 +32,7 @@ export class ParticleSystem {
   private sizes: Float32Array[] = [];
   private colors: Float32Array[] = [];
   private energies: Float32Array[] = [];
+  private velocities: Float32Array[] = [];
   private counts: number[] = [];
 
   private grid: SpatialHashGrid;
@@ -58,14 +53,17 @@ export class ParticleSystem {
       const size = new Float32Array(cap);
       const color = new Float32Array(cap * 3);
       const energy = new Float32Array(cap);
+      const velocity = new Float32Array(cap * 3);
 
       geom.setAttribute('position', new THREE.BufferAttribute(position, 3));
       geom.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
       geom.setAttribute('aColor', new THREE.BufferAttribute(color, 3));
       geom.setAttribute('aEnergy', new THREE.BufferAttribute(energy, 1));
+      geom.setAttribute('aVel', new THREE.BufferAttribute(velocity, 3));
       geom.setDrawRange(0, 0);
 
       const mat = new THREE.ShaderMaterial({
+        defines: { SPECIES_ID: def.id },
         uniforms: {
           uPixelRatio: { value: pixelRatio },
           uSizeScale: { value: 1.0 },
@@ -88,6 +86,7 @@ export class ParticleSystem {
       this.sizes.push(size);
       this.colors.push(color);
       this.energies.push(energy);
+      this.velocities.push(velocity);
       this.counts.push(0);
     }
   }
@@ -196,10 +195,15 @@ export class ParticleSystem {
       const sz = this.sizes[s];
       const cl = this.colors[s];
       const en = this.energies[s];
+      const vel = this.velocities[s];
 
       pos[idx * 3 + 0] = p.px;
       pos[idx * 3 + 1] = p.py;
       pos[idx * 3 + 2] = p.pz;
+
+      vel[idx * 3 + 0] = p.vx;
+      vel[idx * 3 + 1] = p.vy;
+      vel[idx * 3 + 2] = p.vz;
 
       sz[idx] = def.baseSize * p.sizeMul;
       en[idx] = p.energy / def.maxEnergy;
@@ -220,6 +224,7 @@ export class ParticleSystem {
       (geom.attributes.aSize as THREE.BufferAttribute).needsUpdate = true;
       (geom.attributes.aColor as THREE.BufferAttribute).needsUpdate = true;
       (geom.attributes.aEnergy as THREE.BufferAttribute).needsUpdate = true;
+      (geom.attributes.aVel as THREE.BufferAttribute).needsUpdate = true;
     }
   }
 
