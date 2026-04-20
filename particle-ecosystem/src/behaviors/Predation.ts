@@ -56,8 +56,10 @@ export function applyPredation(p: Particle, system: ParticleSystem, dt: number) 
       p.energy = Math.min(def.maxEnergy, p.energy + drain * 0.8);
     }
 
-    // decomposer seeks dying (low-energy) non-Decomposer / non-Plankton individuals
-    if (def.flags.decomposer && other.energy < 0.25 && other.species !== p.species && d2 < preyBestDist) {
+    // decomposer seeks dying (low-energy) non-Decomposer individuals.
+    // Lowered energy threshold so the scavenger niche actually triggers —
+    // in practice few creatures live long enough below 0.25 energy.
+    if (def.flags.decomposer && other.energy < 0.5 && other.species !== p.species && d2 < preyBestDist) {
       preyBestDist = d2;
       preyX = dx; preyY = dy; preyZ = dz;
       preyFound = true;

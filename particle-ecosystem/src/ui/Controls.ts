@@ -5,6 +5,7 @@ export interface SimParams {
   speedMultiplier: number;
   mutationRate: number;
   naturalSelection: boolean;
+  preventExtinction: boolean;
   flocking: { separation: number; alignment: number; cohesion: number; perception: number };
   blackHoleGravity: number;
   nebulaBoost: number;
@@ -22,6 +23,7 @@ export function createSimParams(): SimParams {
     speedMultiplier: 1.0,
     mutationRate: 0.0,
     naturalSelection: false,
+    preventExtinction: true,
     flocking: { separation: 1.5, alignment: 1.0, cohesion: 0.9, perception: 55 },
     blackHoleGravity: 1.0,
     nebulaBoost: 2.5,
@@ -53,6 +55,7 @@ export function mountGui(params: SimParams, hooks: {
 
   const sim = gui.addFolder('Simulation');
   sim.add(params, 'speedMultiplier', 0.1, 5.0, 0.1).name('Speed multiplier');
+  sim.add(params, 'preventExtinction').name('Prevent extinction');
 
   const pop = gui.addFolder('Population Limits');
   for (const s of SPECIES) {

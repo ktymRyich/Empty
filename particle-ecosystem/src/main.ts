@@ -211,9 +211,22 @@ new Loop((dt, elapsed) => {
     updateLifecycle(p, system, simDt, boost);
   }
 
-  // Natural selection: if off, clamp size/speed mutations back
-  if (!params.naturalSelection && params.mutationRate === 0) {
-    // nothing to do
+  // Anti-extinction safeguard: if a species drops below a tiny threshold,
+  // re-seed a small cohort at random positions so the sandbox keeps going.
+  if (params.preventExtinction) {
+    const MIN_ALIVE = 3;
+    const RESEED = 8;
+    for (const def of SPECIES) {
+      if (system.counters[def.id] < MIN_ALIVE) {
+        const need = Math.min(RESEED, def.maxCount - system.counters[def.id]);
+        for (let i = 0; i < need; i++) {
+          const x = worldBounds.min.x + Math.random() * (worldBounds.max.x - worldBounds.min.x);
+          const y = worldBounds.min.y + Math.random() * (worldBounds.max.y - worldBounds.min.y);
+          const z = worldBounds.min.z + Math.random() * (worldBounds.max.z - worldBounds.min.z);
+          system.spawn(def.id, x, y, z);
+        }
+      }
+    }
   }
 
   system.compactDead();
