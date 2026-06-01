@@ -81,7 +81,10 @@ export class Avatar {
     const scale = size.y > 0 ? GameConfig.avatar.height / size.y : 1;
     visual.scale.setScalar(scale);
 
-    // Re-measure after scaling and seat the feet at y=0.
+    // Orient the model to face forward (-Z); configurable per generated asset.
+    visual.rotation.y = GameConfig.avatar.modelYawOffset;
+
+    // Re-measure after scaling/rotation and seat the feet at y=0.
     const scaledBox = new THREE.Box3().setFromObject(visual);
     visual.position.y -= scaledBox.min.y;
     // Centre horizontally on the root.

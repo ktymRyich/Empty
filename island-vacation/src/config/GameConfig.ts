@@ -13,6 +13,10 @@ export const GameConfig = {
     height: 1.7, // metres, feet at y=0
     radius: 0.35,
     headsTall: 4.5, // 4-5 heads-tall stylised proportions
+    // Base yaw (radians) applied to a generated model so it faces forward (-Z).
+    // If your avatar.glb faces the wrong way, set this: Math.PI = 180°,
+    // Math.PI / 2 / -Math.PI / 2 = quarter turns.
+    modelYawOffset: 0,
   },
 
   /** Ground locomotion. */
@@ -37,6 +41,4 @@ export const GameConfig = {
     far: 2000,
   },
 
-  /** Flip to true once a real avatar.glb exists in public/models/. */
-  useGeneratedAvatar: false,
 } as const;

@@ -25,6 +25,9 @@ git 管理され、GitHub 上でもそのまま読めます。**消えない情�
 - [[decisions/ADR-0004-pages-deploy-layout|ADR-0004 Pages は結合公開（サブパス）]]
 - [[decisions/ADR-0005-docs-and-issues|ADR-0005 docs と Issues の役割分担]]
 
+### ガイド
+- [[guides/avatar-pipeline|🧍 アバター生成パイプライン（Pixal3D → avatar.glb）]]
+
 ### 運用
 - [[roadmap|🗺️ ロードマップ]] — Stage と Issue へのリンク
 - [[chat-highlights|💬 チャット重要事項ログ]]

@@ -31,13 +31,17 @@ async function main(): Promise<void> {
   world.registerRegion(new SpringGrassland());
   await world.activate('spring-grassland');
 
-  // --- Avatar: placeholder, or generated glTF when the flag + asset exist ---
+  // --- Avatar: auto-detect. Use the generated avatar if
+  //     public/models/avatar.glb exists, else the primitive placeholder.
+  //     Just drop the file in — no flag to flip. ---
   let avatar: Avatar;
-  if (GameConfig.useGeneratedAvatar) {
+  try {
     const assets = new AssetManager();
     avatar = Avatar.fromGLTF(await assets.load('avatar'));
-  } else {
+    console.info('[avatar] using generated avatar.glb');
+  } catch {
     avatar = Avatar.createPlaceholder();
+    console.info('[avatar] no avatar.glb found — using placeholder');
   }
 
   const player = new Player(avatar);

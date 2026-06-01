@@ -92,7 +92,7 @@ public/models|textures/   生成 .glb / テクスチャの投下先
 - [x] **Stage 3** 追従カメラ(damp 平滑)
 - [x] **Stage 4** 4〜5頭身トゥーン・アバター + 向き + HUD
 - [x] **Stage 5** アセット/アニメのシーム(placeholder 駆動)
-- [ ] 生成 avatar.glb 投入 → `useGeneratedAvatar=true`, `idle/walk` clip マップ
+- [ ] 生成 avatar.glb 投入 → `public/models/avatar.glb` を置くだけで自動検出（リグ付きなら `idle/walk` clip マップ）
 - [ ] 他地域(夏/秋/冬)＋火山
 - [ ] 地域別の移動手段コントローラ
 - [ ] トゥーン・アウトライン後処理(vite-plugin-glsl 再導入)、影

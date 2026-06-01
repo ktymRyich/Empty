@@ -24,7 +24,8 @@ status: accepted
    ComfyUI: Saganaki22/Pixal3D-ComfyUI）。
 2. 出力 GLB を `island-vacation/public/models/` に保存。
 3. `src/assets/manifest.ts` にキー追加 → `AssetManager.load()` / `Avatar.fromGLTF()`。
-4. プレイヤーアバターは `GameConfig.useGeneratedAvatar = true` で差し替え。
+4. プレイヤーアバターは `public/models/avatar.glb` を置くだけで自動検出・差し替え
+   （向きは `GameConfig.avatar.modelYawOffset` で補正）。手順: [[guides/avatar-pipeline]]
 
 ## ライセンス注意
 - **コードは MIT**。ただしリポジトリに重み専用ライセンスの明記なし。
