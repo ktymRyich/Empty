@@ -20,7 +20,7 @@ git 管理され、GitHub 上でもそのまま読めます。**消えない情�
 
 ### エリア設計
 - [[areas/_index|🗺️ エリア設計インデックス]]（全7エリア＋共通システム）
-- [[areas/marine|🌊 マリン]] / [[areas/snow|❄️ スノー]]
+- [[areas/marine|🌊 マリン]] / [[areas/snow|❄️ スノー]] / [[areas/mountain|⛰️ マウンテン]] / [[areas/city|🏙️ シティ]]
 
 ### 決定ログ（ADR）
 - [[decisions/ADR-0001-engine-three-js|ADR-0001 エンジンは Three.js]]
